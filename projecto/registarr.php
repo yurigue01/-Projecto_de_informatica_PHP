@@ -1,0 +1,412 @@
+<?php
+// Include config file
+require_once "config.php";
+
+// Define variables and initialize with empty values
+$Nome = $Nif =  $Email =  $Telefone = $Morada = $Codigo_Postal  = $Password = $confirm_password = "";
+$Nome_err = $Nif_err = $Email_err = $Telefone_err = $Morada_err = $Codigo_Postal_err = $Password_err = $confirm_password_err = "";
+//$Nif = $password = $confirm_password = "";
+//$Nif_err = $password_err = $confirm_password_err = "";
+//$Email = $password = $confirm_password = "";
+//$Email_err = $password_err = $confirm_password_err = "";
+//$Telefone = $password = $confirm_password = "";
+//$Telefone_err = $password_err = $confirm_password_err = "";
+//$Morada = $password = $confirm_password = "";
+//$Morada_err = $password_err = $confirm_password_err = "";
+//$Codigo_Postal = $password = $confirm_password = "";
+//$Codigo_Postal_err = $password_err = $confirm_password_err = "";
+//$Localidade = $password = $confirm_password = "";
+//$Localidade_err = $password_err = $confirm_password_err = "";
+//$username = $password = $confirm_password = "";
+//$username_err = $password_err = $confirm_password_err = "";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Nome"]))){
+        $Nome_err = "Por favor coloque um Nome.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Nome"]))){
+        $Nome_err = "O email pode conter apenas letras, números e sublinhados.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Nome = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Nome);
+
+            // Set parameters
+            $param_Nome = trim($_POST["Nome"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Nome_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Nome = trim($_POST["Nome"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Nif"]))){
+        $Nif_err = "Por favor coloque um Nif.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Nif"]))){
+        $Nif_err = "O Nif pode conter apenas numero.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Nif = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Nif);
+
+            // Set parameters
+            $param_Nif = trim($_POST["Nif"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Nif_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Nif = trim($_POST["Nif"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Email"]))){
+        $Email_err = "Por favor coloque um email.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Email"]))){
+        $Email_err = "O email pode conter apenas letras, números e sublinhados.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Email = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Email);
+
+            // Set parameters
+            $param_Email = trim($_POST["Email"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Email_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Email = trim($_POST["Email"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Telefone"]))){
+        $Telefone_err = "Por favor coloque um nome.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Telefone"]))){
+        $Telefone_err = "O nome de usuário pode conter apenas letras, números e sublinhados.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Telefone = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Telefone);
+
+            // Set parameters
+            $param_Telefone = trim($_POST["Telefone"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Telefone_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Telefone = trim($_POST["Telefone"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Morada"]))){
+        $Morada_err = "Por favor coloque um nome.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Morada"]))){
+        $Morada_err = "O nome de usuário pode conter apenas letras, números e sublinhados.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Morada = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Morada);
+
+            // Set parameters
+            $param_Morada = trim($_POST["Morada"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Morada_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Morada = trim($_POST["Morada"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Validate username
+    if(empty(trim($_POST["Codigo_Postal"]))){
+        $Codigo_Postal_err = "Por favor coloque um nome.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["Codigo_Postal"]))){
+        $Codigo_Postal_err = "O nome de usuário pode conter apenas letras, números e sublinhados.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT ID_candidato FROM candidato WHERE Codigo_Postal = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_Codigo_Postal);
+
+            // Set parameters
+            $param_Codigo_Postal = trim($_POST["Codigo_Postal"]);
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $Codigo_Postal_err = "Este nome de usuário já está em uso.";
+                } else{
+                    $Codigo_Postal = trim($_POST["Codigo_Postal"]);
+                }
+            } else{
+                echo "Ops! Algo deu errado. Por favor, tente novamente mais tarde.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+
+
+
+    // Validate password
+    if(empty(trim($_POST["Password"]))){
+        $password_err = "Please enter a password.";
+    } elseif(strlen(trim($_POST["Password"])) < 8){
+        $Password_err = "Password must have atleast 8 characters.";
+    } else{
+        $Password = trim($_POST["Password"]);
+    }
+
+    // Validate confirm password
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm password.";
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
+        if(empty($Password_err) && ($Password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
+        }
+    }
+
+    // Check input errors before inserting in database
+    if(empty($Nome_err) && empty($Nif_err)&& empty($Email_err)&&  empty($Telefone_err)&& empty($Morada_err)&& empty($Codigo_Postal_err)&& empty($Localidade_err)&& empty($Password_err) && empty($confirm_password_err)){
+
+        // Prepare an insert statement
+        $sql = "INSERT INTO candidato (Nome, Nif, Email, Telefone, Morada, Codigo_Postal, Localidade,  Password) VALUES (?,?,?,?,?,?,?,?)";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ssssssss", $param_Nome, $param_Nif, $param_Email, $param_Telefone, $param_Morada, $param_Codigo_Postal, $param_Localidade, $param_Password);
+
+            // Set parameters
+            $param_Nome = $Nome;
+            $param_Nif = $Nif;
+            $param_Email = $Email;
+            $param_Telefone = $Telefone;
+            $param_Morada = $Morada;
+            $param_Codigo_Postal = $Codigo_Postal;
+            $param_Password = password_hash($Password, PASSWORD_DEFAULT); // Creates a password hash
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                header("location: login.php");
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+    // Close connection
+    mysqli_close($link);
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- register24:03-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/ipb.png">
+    <title>AJUDA.IPB</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<a>Registo de Candidato</a>
+<body>
+<div class="main-wrapper  account-wrapper">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top"><a href="../Index/index.html">AJUDA.IPB</a>
+        <div class="account-page">
+            <div class="account-center">
+                <div class="account-box">
+                    <form action="../Candidato/Login_c.php" class="form-signin">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                            <div class="account-logo">
+                                <a href="../Candidato/Login_c.php"><img src="../assets/img/ipb.png" alt=""></a>
+                            </div>
+                            <div class="form-group">
+                                <label>Nome</label>
+                                <input type="text" name="Nome"  class="form-control">
+                                <?php echo (!empty($Nome_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Nome; ?>">
+                                <span class="invalid-feedback"><?php echo $Nome_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>NIF</label>
+                                <input type="text" name="Nif"  class="form-control">
+                                <?php echo (!empty($Nif_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Nif; ?>">
+                                <span class="invalid-feedback"><?php echo $Nif_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="Email"  class="form-control">
+                                <?php echo (!empty($Email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Email; ?>">
+                                <span class="invalid-feedback"><?php echo $Email_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="text" name="Telefone"  class="form-control">
+                                <?php echo (!empty(Telefone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Telefone; ?>">
+                                <span class="invalid-feedback"><?php echo $Telefone_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Morada</label>
+                                <input type="text" name="Morada" class="form-control">
+                                <?php echo (!empty($Morada_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Morada; ?>">
+                                <span class="invalid-feedback"><?php echo $Morada_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Codigo postal</label>
+                                <input type="text" name="Postal_Codigo" class="form-control">
+                                <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Codigo_Postal; ?>">
+                                <span class="invalid-feedback"><?php echo $Codigo_Postal_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control">
+                                <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Confima Password</label>
+                                <input type="password" class="form-control">
+                                <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+                                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+                            </div>
+
+                            <div class="form-group checkbox">
+                                <label>
+                                    <input type="checkbox"> I have read and agree the Terms & Conditions
+                                </label>
+                            </div>
+                            <div class="form-group text-center">
+                                <button  style="background-color: #820053; color: #fff;"  class="btn account-btn" type="submit">"Submeter</button>
+                            </div>
+                            <div class="text-center login-link">
+                                Já tens a conta? <a href="../Candidato/Login_c.php">Login</a>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="../assets/js/jquery-3.2.1.min.js"></script>
+<script src="../assets/js/popper.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/app.js"></script>
+</div>
+</body>
+</html>
