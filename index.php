@@ -2,14 +2,6 @@
 
 session_start();
 
-if(isset($_SESSION["loggedin"])){
-    if($_SESSION["loggedin"] == true && $_SESSION["tipo_utilizador"]== "admin") {
-        header("location:  ");   //adm
-    }else{
-        header("location:");
-    }
-
-}
 
 ?>
 <!DOCTYPE html>
@@ -60,7 +52,7 @@ if(isset($_SESSION["loggedin"])){
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="login.php">Utilizador</a>
-                        <a class="dropdown-item" href="../Empresa/login_e.html">Empresas</a>
+                        <a class="dropdown-item" href="login_empresa.php">Empresas</a>
                     </div>
                 </div>
 

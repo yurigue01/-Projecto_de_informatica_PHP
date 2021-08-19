@@ -5,16 +5,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
 }
 
-if(isset($_SESSION["loggedin"])){
-    if($_SESSION["loggedin"] == true && $_SESSION["tipo_utilizador"]=="candidato"){
-        header("location: perfil_candidato.php");
-    }
-}
-
-require_once ("operacao.php");
-$op=require_once ( "config.php");
-
-
 
 
 ?>
@@ -43,6 +33,7 @@ $id=$_SESSION["ID_utilizador"];
 
 
 
+
 $sql = "SELECT * FROM utilizador WHERE ID_utilizador = '$id'";
 $result = $link->query($sql);
 
@@ -56,6 +47,15 @@ $Morada  = $bus['Morada'];
 $Localidade  = $bus['Localidade'];
 $cp = $bus['Codigo_Postal'];
 $Nif = $bus['Nif'];
+$Habilitacao = $bus['Habilitacoes'];
+
+
+
+
+
+
+
+
 
 
 
@@ -81,7 +81,7 @@ $Nif = $bus['Nif'];
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="perfil_candidato.php">Meu Perfil</a>
                     <a class="dropdown-item" href="editar_perfil.php">Editar Perfil</a>
-                    <a class="dropdown-item" href="Utilizador/Candidato/change-password.html">Alterar Password</a>
+                    <a class="dropdown-item" href="alterar_password.php">Alterar Password</a>
                     <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
             </li>
@@ -91,7 +91,7 @@ $Nif = $bus['Nif'];
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="perfil_candidato.php">Meu Perfil</a>
                 <a class="dropdown-item" href="editar_perfil.php">Editar Perfil</a>
-                <a class="dropdown-item" href="Utilizador/Candidato/change-password.html">Alterar Password</a>
+                <a class="dropdown-item" href="alterar_password.php">Alterar Password</a>
                 <a class="dropdown-item" href="logout.php">Logout</a>
             </div>
         </div>
@@ -178,22 +178,11 @@ $Nif = $bus['Nif'];
 
 
 
-                                                <!---- Buscar todas as abilitações do utilizador -->
-                                                <span class="title">Habilitações:</span>
+                                            <!---- Buscar todas as abilitações do utilizador -->
+                                            <span class="title">Habilitações:</span>
+                                            <span class="text"><?php echo"$Habilitacao" ?> </span>
 
 
-                                                <?php
-                                                
-                                                $Hab=getReceitasByIds($op,$id);
-
-                                                foreach ($Hab as $hab ):
-                                                ?>
-
-
-                                            <span class="text">  <?php echo $hab['Habilitacoes'] ?> </span>
-                                            <?php
-                                            endforeach;
-                                            ?>
 
                                             </li>
                                         </ul>

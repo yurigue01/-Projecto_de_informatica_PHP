@@ -3,15 +3,15 @@
 session_start();
 
 // Check if the perfil_users is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"])){
-    if($_SESSION["loggedin"] == true && $_SESSION["Tipo_utilizador_ID_tipo"]== 1) {
-        header("location: perfil_adm.php");                                      //adm
-    }else{
+//if(isset($_SESSION["loggedin"])){
+//  if($_SESSION["loggedin"] == true && $_SESSION["Tipo"]== "admin") {
+//     header("location: perfil_candidato.php");                                      //adm
+//   }else{
 
-       header("location: perfil_candidato.php");
-    }
+//   header("location: perfil_adm.php");
+// }
 
-}
+//}
 
 
 // Include config file
@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT utilizador.ID_utilizador, username, Password, Tipo_utilizador_ID_tipo FROM utilizador  inner join tipo_utilizador on utilizador.Tipo_utilizador_ID_tipo = tipo_utilizador.ID_tipo  WHERE username = ?";
+        $sql = "SELECT ID_empresa, username, Password FROM empresa WHERE username = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     // Bind resultado variables
 
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $tipo);
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
                         $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
 
@@ -69,17 +69,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["ID_utilizador"] = $id;
-                            $_SESSION["Tipo_utilizador_ID_tipo"] = $tipo;
+                            $_SESSION["ID_empresa"] = $id;
                             $_SESSION["username"] = $username;
 
                             // Redirect perfil_users to welcome page
-                            if($tipo==1) {
 
-                                header("location:  perfil_adm.php ");
-                            }else{
-                                header("location: perfil_candidato.php");
-                            }
+
+                            header("location:  perfil_Empresa.php ");
+
 
                         }
 
@@ -138,10 +135,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post"
                           class="form-signin">
                         <div class="account-logo">
-                            <a href="../Candidato/profile.html"><img src="assets/img/ipb.png" alt=""></a>
+                            <a href=""><img src="assets/img/ipb.png" alt=""></a>
                         </div>
                         <div class="form-group <?php echo (!empty($username_err)) ? 'erro no utilizador' : '';?>">
-                            <label>Nome do Utilizador </label>
+                            <label>Username da empresa </label>
                             <input type="text" name="username" autofocus="" id="<?php echo $username; ?>"
                                    class="form-control">
                             <span class=" help-block"><?php echo $username_err; ?></span>
@@ -159,7 +156,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <button style="background-color: #820053; color: #fff;" type="submit" class="btn account-btn">Entrar</button>
                         </div>
                         <div class="text-left register-link">
-                            Não tens a conta? <a href="registar.php">Registra já</a>
+                            Não tens a conta? <a href="registar_empresa.php">Registra já</a>
                         </div>
                     </form>
                 </div>

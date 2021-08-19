@@ -10,7 +10,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/ipb.png">
     <title>AJUDA.IPB</title>
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
@@ -96,9 +96,9 @@ echo $sql;
                     <span><?php echo"$username" ?></span>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="perfil_candidato.php">Meu Perfil</a>
-                    <a class="dropdown-item" href="editar_perfil.php">Editar Perfil</a>
-                    <a class="dropdown-item" href="change-password.html">Alterar Password</a>
+                    <a class="dropdown-item" href="perfil_adm.php">Meu Perfil</a>
+                    <a class="dropdown-item" href="editar_perfil_adm.php">Editar Perfil</a>
+                    <a class="dropdown-item" href="alterar_password.php">Alterar Password</a>
                     <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
             </li>
@@ -106,9 +106,9 @@ echo $sql;
         <div class="dropdown mobile-user-menu float-right">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="perfil_candidato.php">Meu Perfil</a>
-                <a class="dropdown-item" href="editar_perfil.php">Editar Perfil</a>
-                <a class="dropdown-item" href="change-password.html">Alterar Password</a>
+                <a class="dropdown-item" href="perfil_adm.php">Meu Perfil</a>
+                <a class="dropdown-item" href="editar_perfil_adm.php">Editar Perfil</a>
+                <a class="dropdown-item" href="alterar_password.php">Alterar Password</a>
                 <a class="dropdown-item" href="logout.php">Logout</a>
             </div>
         </div>
@@ -119,7 +119,7 @@ echo $sql;
                 <ul>
                     <li class="menu-title">Principal</li>
                     <li>
-                        <a href="perfil_candidato.php"><i class="fa fa-user"></i> <span>Perfil</span></a>
+                        <a href="perfil_adm.php"><i class="fa fa-user"></i> <span>Perfil</span></a>
                     </li>
                     <li>
                         <a href="../../assets/Instruction%20Manual%20for%20Safety%20and%20Comfort.pdf"><i class="fa fa-book"></i> <span>CV</span></a>
@@ -183,12 +183,12 @@ echo $sql;
                 <div class="col-sm-7 col-6">
                     <h4 class="page-title">Edição de Dados Pessoais </h4>
                 </div>
-                <form action="edit.php" method="POST" class="form-signin">
+                <form action="edit_adm.php" method="POST" class="form-signin">
 
 
                     <fieldset>
 
-                <a href="perfil_candidato.php"> <button style="background-color: #229bc6; color: #fff;" class="btn account-btn">Cancelar</button></a>
+                <a href="perfil_adm.php"> <button style="background-color: #229bc6; color: #fff;" class="btn account-btn">Cancelar</button></a>
 
                         <button style="background-color: #229bc6; color: #fff;" class="btn account-btn" type="submit"  >Guardar Alterções</button>
 
@@ -207,7 +207,7 @@ echo $sql;
                                                         <div class="col-sm-9">
                                                         <div class="form-group">
                                                             <label>Username</label>
-                                                            <input class="form-control" type="text" name="x_username" value=" <?=$row['username']?>">
+                                                            <input class="form-control" type="text" name="y_username" value=" <?=$row['username']?>">
                                                         </div>
                                                         </div>
 
@@ -215,19 +215,19 @@ echo $sql;
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Nome <span class="text-danger"></span></label>
-                                                                <input class="form-control" type="text" name="x_Nome" value=" <?=$row['Nome']?>  ">
+                                                                <input class="form-control" type="text" name="y_Nome" value=" <?=$row['Nome']?>  ">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Email<span class="text-danger"></span></label>
-                                                                <input class="form-control" type="text" name="x_Email" value=" <?=$row['Email']?> ">
+                                                                <input class="form-control" type="text" name="y_Email" value=" <?=$row['Email']?> ">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Telefone<span class="text-danger"></span></label>
-                                                                <input class="form-control" type="text" name="x_Telefone" value=" <?=$row['Telefone']?>  ">
+                                                                <input class="form-control" type="text" name="y_Telefone" value=" <?=$row['Telefone']?>  ">
                                                             </div>
                                                             <h3 class="page-title">Endereço Postal</h3>
                                                         </div>
@@ -235,55 +235,27 @@ echo $sql;
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Morada</label>
-                                                                <input class="form-control " name="x_Morada" value=" <?=$row['Morada']?> " type="text">
+                                                                <input class="form-control " name="y_Morada" value=" <?=$row['Morada']?> " type="text">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Código Postal</label>
-                                                                <input class="form-control " name="x_Codigo_Postal" value=" <?=$row['Codigo_Postal']?>  " type="text">
+                                                                <input class="form-control " name="y_Codigo_Postal" value=" <?=$row['Codigo_Postal']?>  " type="text">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Localidade</label>
-                                                                <input class="form-control " name="x_Localidade" value=" <?=$row['Localidade']?>  "type="text">
+                                                                <input class="form-control " name="y_Localidade" value=" <?=$row['Localidade']?>  "type="text">
                                                             </div>
                                                     </div>
                                                         <div class="col-sm-9">
                                                             <div class="form-group">
                                                                 <label>Nif</label>
-                                                                <input class="form-control " name="x_Nif" value=" <?=$row['Nif']?>  "type="text">
+                                                                <input class="form-control " name="y_Nif" value=" <?=$row['Nif']?>  "type="text">
                                                             </div>
-                                                            <!-- seleção de habilitação -->
-                                                            <div>
-                                                                <label for="HB">Selecione a sua habilitação:</label>
-                                                                <select class="form-control " name="ID_habilitacoes" required>
 
-                                                                    <option value="">Habilitações...</option>
-                                                                    <?php
-                                                                    require ("config.php");
-                                                                    $link->set_charset("utf8");
-                                                                    $consulta = 'SELECT * FROM habilitacoes';
-
-                                                                    /* executar a sql e testar se ocorreu erro */
-                                                                    if (!$resultado = $link->query($consulta)) {
-                                                                        echo ' Falha na sql: '. $link->error;
-                                                                        $link->close();  /* fechar a ligação */
-                                                                    }
-                                                                    else{
-                                                                        while ($row = $resultado->fetch_assoc()) {
-
-                                                                            ?>
-                                                                            <option value=<?php echo $row['ID_habilitacoes'];?>><?php echo $row['Habilitacoes'];?></option>
-                                                                            <?php
-                                                                        }
-
-                                                                    }
-                                                                    ?>
-
-                                                                </select>
-                                                                <br><br>
                                                             </div>
 
                                                         </div>

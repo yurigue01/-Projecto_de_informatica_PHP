@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Localidade = filter_input(INPUT_POST, 'x_Localidade');
     $Codigo_Postal= filter_input(INPUT_POST, 'x_Codigo_Postal');
     $Nif= filter_input(INPUT_POST, 'x_Nif');
+    $Habilitacoes= filter_input(INPUT_POST, 'x_Habilitacoes');
+   
 
 
 
@@ -30,7 +32,7 @@ else{
 }
 
 
-$Edit ="UPDATE utilizador SET username='$username', Nome='$Nome', Email= '$Email', Telefone='$Telefone',Morada='$Morada',Localidade='$Localidade' ,Codigo_Postal='$Codigo_Postal',Nif='$Nif'WHERE ID_utilizador = '$id'";
+$Edit ="UPDATE utilizador SET username='$username', Nome='$Nome', Email= '$Email', Telefone='$Telefone',Morada='$Morada',Localidade='$Localidade' ,Codigo_Postal='$Codigo_Postal',Nif='$Nif'   WHERE ID_utilizador = '$id'";
 
 if (!$link->query($Edit)) {
     echo " Falha ao executar a consulta: \"$Edit\" <br>" . $link->error;
@@ -41,6 +43,5 @@ if (!$link->query($Edit)) {
     header( "location:perfil_candidato.php");
     $link->close();
 }
-
 
 ?>

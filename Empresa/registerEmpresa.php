@@ -1,12 +1,20 @@
 <?php
+
+?>
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt"><?php
 session_start();
 // Include config file
 require_once("config.php");
 
 
 // Define variables and initialize with empty values
-$username =  $Password  = $Nome = $Email = $Nif= $confirm_password = "";
-$username_err = $Password_err = $Nome_err = $Email_err = $Nif_err= $confirm_password_err = "";
+$Nif =  $Password  = $Nome = $Email = $confirm_password = "";
+$Nif_err = $Password_err = $Nome_err = $Email_err = $confirm_password_err = "";
 
 
 
@@ -14,18 +22,18 @@ $username_err = $Password_err = $Nome_err = $Email_err = $Nif_err= $confirm_pass
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate username
-    if(empty(trim($_POST["username"]))){
-        $username_err = "Por favor coloque um nome de utilizador.";
+    if(empty(trim($_POST["Nif"]))){
+        $Nif_err = "Por favor coloque um nome de utilizador.";
     } else {
         // Prepare a select statement
-        $sql = "SELECT ID_empresa FROM empresa WHERE username = ?";
+        $sql = "SELECT ID_utilizador FROM utilizador WHERE Nif= ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            mysqli_stmt_bind_param($stmt, "s", $param_Nif);
 
             // Set parameters
-            $param_username = trim($_POST["username"]);
+            $param_Nif = trim($_POST["Nif"]);
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -33,9 +41,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 mysqli_stmt_store_result($stmt);
 
                 if (mysqli_stmt_num_rows($stmt) == 1) {
-                    $username_err = "Este nome de utilizador já está em uso.";
+                    $Nif_err = "Este nome de utilizador já está em uso.";
                 } else {
-                    $username = trim($_POST["username"]);
+                    $Nif = trim($_POST["Nif"]);
                 }
             } else {
                 //log error
@@ -55,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $Nome_err = "Por favor coloque um nome de utilizador.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT ID_empresa FROM empresa WHERE   Nome = ?";
+        $sql = "SELECT ID_utilizador FROM utilizador WHERE   Nome = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -82,50 +90,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         mysqli_stmt_close($stmt);
     }
 
-
-    // Validate name
-    if(empty(trim($_POST["Nif"]))){
-        $Nif_err = "Por favor coloque um nome de utilizador.";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT ID_empresa FROM empresa WHERE   Nif = ?";
-
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_Nome);
-
-            // Set parameters
-            $param_Nif = trim($_POST["Nif"]);
-
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store resultado */
-                mysqli_stmt_store_result($stmt);
-
-
-                $Nif = trim($_POST["Nif"]);
-            } else{
-                //log error
-                //echo mysqli_errno($this->con);
-                echo "Opa! Algo deu errado. Por favor, tente novamente mais tarde.";
-            }
-        }
-
-        // Close statement
-        mysqli_stmt_close($stmt);
-    }
-
-
-
-
     if(empty(trim($_POST["Email"]))){
         $Email_err = "Por favor insira um nome.";
 
     } else {
-        $sql = "SELECT ID_empresa FROM empresa Where Email = ?";
+        $sql = "SELECT ID_utilizador FROM utilizador Where Email = ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "s", $param_Nif);
+            mysqli_stmt_bind_param($stmt, "s", $param_Name);
             //set parameters
             $param_Email = trim($_POST["Email"]);
 
@@ -146,9 +118,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         mysqli_stmt_close($stmt);
     }
-
-
-
 
     //validar password
 
@@ -171,27 +140,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($Password_err) && empty($confirm_password_err) && empty($Name_err) && empty($Email_err) && empty($Nif_err)){
+    if(empty($username_err) && empty($Password_err) && empty($confirm_password_err) && empty($Name_err) && empty($Email_err)){
 
         // Prepare an insert statement
-        $sql = "INSERT INTO empresa (username, Password, Nome, Nif, Email) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO utilizador (username, Password, Nome, Email) VALUES (?, ?, ?, ?)";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_Password, $param_Nome,$param_Nif, $param_Email);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_Password, $param_Nome, $param_Email);
 
             // Set parameters
 
             $param_username = $username;
             $param_Nome = $Nome;
-            $param_Nif = $Nif;
             $param_Email = $Email;
             $param_Password = password_hash($Password, PASSWORD_DEFAULT); // Creates a password hash
 
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: login_empresa.php");
+                header("location: login.php");
             } else{
                 //echo mysqli_errno($this->link);
                 echo "Algo deu errado. Por favor, tente novamente mais tarde.";
@@ -228,17 +196,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
 <!--Registo de candidato-->
 <div class="main-wrapper  account-wrapper">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top"><a href="index.php">AJUDA.IPB</a>
+    <a class="navbar-brand js-scroll-trigger" href="#page-top"><a href="../Index/index.html">AJUDA.IPB</a>
         <div class="account-page">
             <div class="account-center">
                 <div class="account-box">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form-signin">
                         <div class="account-logo">
-                            <a href="login.php"><img src="assets/img/ipb.png" alt=""></a>
-                        </div>
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" id="<?php echo $username; ?>">
+                            <a href="Candidato/Login_c.php"><img src="assets/img/ipb.png" alt=""></a>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -248,6 +212,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <label>Nome</label>
                             <input type="text" name="Nome" class="form-control <?php echo (!empty($Nome_err)) ? 'is-invalid' : ''; ?>" id="<?php echo $Nome; ?>">
                         </div>
+
                         <div class="form-group">
                             <label>Nif</label>
                             <input type="text" name="Nif" class="form-control <?php echo (!empty($Nif_err)) ? 'is-invalid' : ''; ?>" id="<?php echo $Nif; ?>">
@@ -267,7 +232,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <button  style="background-color: #820053; color: #fff;"  class="btn account-btn" type="submit">Submeter</button>
                         </div>
                         <div class="text-center login-link">
-                            Já tens a conta? <a href="login_empresa.php">Login</a>
+                            Já tens a conta? <a href="login.php">Login</a>
                         </div>
                     </form>
                 </div>
@@ -279,5 +244,95 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/app.js"></script>
 </body>
+<!-- register24:03-->
+</html>
+
+
+
+<!-- register24:03-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/ipb.png">
+    <title>AJUDA.IPB</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<a>Registo de Empresa</a>
+<body>
+<div class="main-wrapper  account-wrapper">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top"><a href="Index/index.html">AJUDA.IPB</a>
+        <div class="account-page">
+            <div class="account-center">
+                <div class="account-box">
+                    <form action="../Empresa/login_e.html" class="form-signin">
+                        <div class="account-logo">
+                            <a href="../Empresa/login_e.html"><img src="assets/img/ipb.png" alt=""></a>
+                        </div>
+                        <div class="form-group">
+                            <label>username</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Morada</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Código Postal</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Localidade</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>NIF</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Área</label>
+                            <input type="email" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Re-type Password</label>
+                            <input type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <label>
+                                <input type="checkbox"> I have read and agree the Terms & Conditions
+                            </label>
+                        </div>
+                        <div class="form-group text-center">
+                            <button style="background-color: #820053; color: #fff;"  class="btn account-btn" type="submit">Submeter</button>
+                        </div>
+                        <div class="text-center login-link">
+                            Já tens a conta? <a href="../loginEmpresa.html">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+
+
 <!-- register24:03-->
 </html>
